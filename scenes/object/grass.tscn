@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhgv86unx52ep"]
 
-[ext_resource type="Script" path="res://scenes/objects/grass.gd" id="1_4cw5h"]
+[ext_resource type="Script" path="res://scenes/object/grass.gd" id="1_4cw5h"]
 [ext_resource type="Texture2D" uid="uid://us1n27nt7p8d" path="res://assets/World/Grass.png" id="1_txnqp"]
 [ext_resource type="PackedScene" uid="uid://c0vcsy3y6fqpi" path="res://scenes/component/hurtbox_component.tscn" id="2_tbom3"]
 

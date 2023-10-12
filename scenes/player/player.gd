@@ -9,6 +9,7 @@ enum CharacterState {
 @export var acceleration = 1000.0
 @export var friction = 1000.0
 @export var max_speed = 150.0
+@export var dodge_speed = 200.0
 
 @onready var animation_player = %AnimationPlayer
 @onready var animation_tree = %AnimationTree
@@ -16,6 +17,7 @@ enum CharacterState {
 @onready var hitbox_collision = $HitboxComponent/HitboxCollision
 
 var state = CharacterState.MOVE
+var dodge_vector = Vector2.LEFT
 
 
 func _ready():
@@ -28,13 +30,13 @@ func _physics_process(delta):
 			move_state(delta)
 			
 		CharacterState.ROLL:
-			pass
+			roll_state(delta)
 			
 		CharacterState.ATTACK:
-			attack_state()
+			attack_state(delta)
 
 
-func attack_state():
+func attack_state(delta: float):
 	velocity = Vector2.ZERO
 	animation_state.travel("Sword")
 	
@@ -49,6 +51,12 @@ func move_state(delta: float):
 	update_animation(move_direction)
 
 
+func roll_state(delta: float):
+	velocity = dodge_vector * dodge_speed
+	animation_state.travel("Roll")
+	move_and_slide()
+	
+	
 func handle_input(move_direction: Vector2, delta: float):
 
 	if move_direction != Vector2.ZERO:
@@ -56,19 +64,28 @@ func handle_input(move_direction: Vector2, delta: float):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 		
-	if Input.is_action_just_pressed("weapon"):
+	if Input.is_action_just_pressed("dodge"):
+		state = CharacterState.ROLL
+		
+	elif Input.is_action_just_pressed("weapon"):
 		state = CharacterState.ATTACK
 
 
 func update_animation(move_direction: Vector2):
 	if move_direction != Vector2.ZERO:
+		dodge_vector = move_direction
 		animation_tree.set("parameters/Idle/blend_position", move_direction)
 		animation_tree.set("parameters/Run/blend_position", move_direction)
 		animation_tree.set("parameters/Sword/blend_position", move_direction)
+		animation_tree.set("parameters/Roll/blend_position", move_direction)
 		animation_state.travel("Run")
 	else:
 		animation_state.travel("Idle")
 
 
 func attack_animation_finished():
+	state = CharacterState.MOVE
+
+
+func roll_animation_finished():
 	state = CharacterState.MOVE

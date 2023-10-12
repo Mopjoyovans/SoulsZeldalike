@@ -13,6 +13,7 @@ enum CharacterState {
 @onready var animation_player = %AnimationPlayer
 @onready var animation_tree = %AnimationTree
 @onready var animation_state = animation_tree.get("parameters/playback")
+@onready var hitbox_collision = $HitboxComponent/HitboxCollision
 
 var state = CharacterState.MOVE
 
@@ -30,15 +31,16 @@ func _physics_process(delta):
 			pass
 			
 		CharacterState.ATTACK:
-			attack_state(delta)
+			attack_state()
 
 
-func attack_state(delta: float):
+func attack_state():
 	velocity = Vector2.ZERO
 	animation_state.travel("Sword")
 	
 	
 func move_state(delta: float):
+	hitbox_collision.disabled = true
 	var move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	move_direction = move_direction.normalized()
 

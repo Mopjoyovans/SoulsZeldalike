@@ -15,13 +15,15 @@ enum CharacterState {
 @onready var animation_tree = %AnimationTree
 @onready var animation_state = animation_tree.get("parameters/playback")
 @onready var hitbox_collision = $HitboxComponent/HitboxCollision
+@onready var hitbox_component: HitboxComponent = $HitboxComponent
 
 var state = CharacterState.MOVE
-var dodge_vector = Vector2.LEFT
+var dodge_vector = Vector2.DOWN
 
 
 func _ready():
 	animation_tree.active = true
+	hitbox_component.knockback_vector = dodge_vector
 
 
 func _physics_process(delta):
@@ -74,6 +76,7 @@ func handle_input(move_direction: Vector2, delta: float):
 func update_animation(move_direction: Vector2):
 	if move_direction != Vector2.ZERO:
 		dodge_vector = move_direction
+		hitbox_component.knockback_vector = move_direction
 		animation_tree.set("parameters/Idle/blend_position", move_direction)
 		animation_tree.set("parameters/Run/blend_position", move_direction)
 		animation_tree.set("parameters/Sword/blend_position", move_direction)

@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://bqyg4n5k5a4s7"]
+
+[ext_resource type="Texture2D" uid="uid://cscmh3xtw2nlg" path="res://assets/Effects/EnemyDeathEffect.png" id="1_x1f0n"]
+[ext_resource type="Script" path="res://scenes/effects/enemy_death_effect.gd" id="2_rcwk7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixjgf"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qe3x"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkslk"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awrvf"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2r8m1"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0uso"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6s2x"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmdba"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s053b"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vl1i"]
+atlas = ExtResource("1_x1f0n")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dnqet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixjgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qe3x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkslk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awrvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2r8m1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0uso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6s2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmdba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s053b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vl1i")
+}],
+"loop": false,
+"name": &"destroy",
+"speed": 15.0
+}]
+
+[node name="EnemyDeathEffect" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_dnqet")
+animation = &"destroy"
+offset = Vector2(0, -8)
+script = ExtResource("2_rcwk7")

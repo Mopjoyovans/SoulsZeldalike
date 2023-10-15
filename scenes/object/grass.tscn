@@ -13,6 +13,7 @@ script = ExtResource("1_4cw5h")
 [node name="HurtboxComponent" parent="." instance=ExtResource("2_tbom3")]
 collision_layer = 5
 collision_mask = 8
+show_hit_effect = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 position = Vector2(8, 8)

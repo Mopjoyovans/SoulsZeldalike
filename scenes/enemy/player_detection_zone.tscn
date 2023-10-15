@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://wx2xqsxuni4b"]
+
+[ext_resource type="Script" path="res://scenes/enemy/player_detection_zone.gd" id="1_lamwq"]
+
+[node name="PlayerDetectionZone" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_lamwq")

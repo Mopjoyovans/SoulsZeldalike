@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bkd8ed13pb3pf"]
+[gd_scene load_steps=14 format=3 uid="uid://bkd8ed13pb3pf"]
 
 [ext_resource type="PackedScene" uid="uid://cgo40cfx4q6b8" path="res://scenes/player/player.tscn" id="1_61r7b"]
 [ext_resource type="Texture2D" uid="uid://dhimiy8bjxbnx" path="res://assets/World/GrassBackground.png" id="1_i8xa3"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dtuvxtvigd813" path="res://assets/World/CliffTileset.png" id="3_cih4k"]
 [ext_resource type="PackedScene" uid="uid://bhgv86unx52ep" path="res://scenes/object/grass.tscn" id="6_28p1t"]
 [ext_resource type="PackedScene" uid="uid://fo0arsrg6ab8" path="res://scenes/enemy/bat.tscn" id="7_ey0kf"]
+[ext_resource type="PackedScene" uid="uid://wj16yqrwgx57" path="res://scenes/ui/health_ui.tscn" id="8_3jft2"]
+[ext_resource type="PackedScene" uid="uid://b3png5vf6hnwb" path="res://scenes/object/tree.tscn" id="9_h0q5k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vqaj7"]
 texture = ExtResource("2_7brtt")
@@ -1010,3 +1012,12 @@ position = Vector2(200, 104)
 
 [node name="Player" parent="." instance=ExtResource("1_61r7b")]
 position = Vector2(312, 104)
+
+[node name="HealthUI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_3jft2")]
+player = NodePath("../Player")
+
+[node name="Tree" parent="." instance=ExtResource("9_h0q5k")]
+position = Vector2(104, 168)
+
+[node name="Tree2" parent="." instance=ExtResource("9_h0q5k")]
+position = Vector2(360, 56)

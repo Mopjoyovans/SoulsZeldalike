@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 enum CharacterState {
@@ -11,17 +12,22 @@ enum CharacterState {
 @export var max_speed = 150.0
 @export var dodge_speed = 200.0
 
+var state = CharacterState.MOVE
+var dodge_vector = Vector2.DOWN
+var iframe_counter = 0.5
+
 @onready var animation_player = %AnimationPlayer
 @onready var animation_tree = %AnimationTree
 @onready var animation_state = animation_tree.get("parameters/playback")
 @onready var hitbox_collision = $HitboxComponent/HitboxCollision
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
-
-var state = CharacterState.MOVE
-var dodge_vector = Vector2.DOWN
+@onready var hurtbox_component = $HurtboxComponent
+@onready var health_component = $HealthComponent
 
 
 func _ready():
+	health_component.died.connect(on_player_died)
+	hurtbox_component.area_entered.connect(on_player_hit)
 	animation_tree.active = true
 	hitbox_component.knockback_vector = dodge_vector
 
@@ -92,3 +98,12 @@ func attack_animation_finished():
 
 func roll_animation_finished():
 	state = CharacterState.MOVE
+
+
+func on_player_hit(area):
+	health_component.health -= 1
+	hurtbox_component.start_invincibility(iframe_counter)
+
+
+func on_player_died():
+	queue_free()

@@ -8,10 +8,6 @@ enum BatState {
 
 const enemy_death_effect_scene = preload("res://scenes/effects/enemy_death_effect.tscn")
 
-@onready var stats_component: StatsComponent = $StatsComponent
-@onready var player_detection_zone = $PlayerDetectionZone
-@onready var animated_sprite = $AnimatedSprite
-
 @export var acceleration = 400.0
 @export var friction = 0.1
 @export var knockback = 130.0
@@ -19,6 +15,11 @@ const enemy_death_effect_scene = preload("res://scenes/effects/enemy_death_effec
 
 var current_state = BatState.CHASE
 var knockback_speed = 200.0
+
+@onready var health_component: HealthComponent = $HealthComponent
+@onready var hurtbox_component = $HurtboxComponent
+@onready var player_detection_zone = $PlayerDetectionZone
+@onready var animated_sprite = $AnimatedSprite
 
 
 func _physics_process(delta):
@@ -61,11 +62,11 @@ func update_animation():
 
 
 func _on_hurtbox_component_area_entered(area):
-	stats_component.health -= area.damage
+	health_component.health -= area.damage
 	velocity = area.knockback_vector * knockback
 
 
-func _on_stats_component_died():
+func _on_health_component_died():
 	var enemy_death_effect = enemy_death_effect_scene.instantiate()
 	get_parent().add_child(enemy_death_effect)
 	enemy_death_effect.global_position = global_position

@@ -1,12 +1,19 @@
-[gd_scene load_steps=52 format=3 uid="uid://cgo40cfx4q6b8"]
+[gd_scene load_steps=56 format=3 uid="uid://cgo40cfx4q6b8"]
 
 [ext_resource type="Texture2D" uid="uid://dtfvcfk2tx26c" path="res://assets/Player/Player.png" id="1_ry2ov"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_toj7d"]
+[ext_resource type="Texture2D" uid="uid://dm2bt387x3ml5" path="res://assets/Shadows/MediumShadow.png" id="2_85pc1"]
 [ext_resource type="PackedScene" uid="uid://cqvsoqpwt1mb8" path="res://scenes/component/hitbox_component.tscn" id="2_kdt00"]
+[ext_resource type="PackedScene" uid="uid://bupqwyj6uepi0" path="res://scenes/component/health_component.tscn" id="4_22bvy"]
+[ext_resource type="PackedScene" uid="uid://c0vcsy3y6fqpi" path="res://scenes/component/hurtbox_component.tscn" id="4_rwqi8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d7g5p"]
 radius = 3.0
 height = 16.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ufgc8"]
+radius = 5.0
+height = 18.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d1wui"]
 radius = 5.0
@@ -863,18 +870,34 @@ collision_mask = 17
 script = ExtResource("1_toj7d")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 texture = ExtResource("1_ry2ov")
 hframes = 60
 frame = 1
 
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 10)
+texture = ExtResource("2_85pc1")
+
 [node name="HitboxComponent" parent="." instance=ExtResource("2_kdt00")]
 collision_layer = 8
-collision_mask = 4
+collision_mask = 0
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="HitboxComponent"]
 position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_d7g5p")
 disabled = true
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("4_rwqi8")]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_ufgc8")
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_22bvy")]
+max_health = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 7)

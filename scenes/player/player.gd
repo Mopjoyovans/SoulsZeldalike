@@ -7,6 +7,8 @@ enum CharacterState {
 	ATTACK
 }
 
+const PLAYER_HURT_SOUND = preload("res://scenes/sound/player_hurt_sound.tscn")
+
 @export var acceleration = 1000.0
 @export var friction = 1000.0
 @export var max_speed = 150.0
@@ -14,9 +16,10 @@ enum CharacterState {
 
 var state = CharacterState.MOVE
 var dodge_vector = Vector2.DOWN
-var iframe_counter = 0.5
+var iframe_counter = 0.6
 
 @onready var animation_player = %AnimationPlayer
+@onready var blink_animation_player = $BlinkAnimationPlayer
 @onready var animation_tree = %AnimationTree
 @onready var animation_state = animation_tree.get("parameters/playback")
 @onready var hitbox_collision = $HitboxComponent/HitboxCollision
@@ -101,9 +104,19 @@ func roll_animation_finished():
 
 
 func on_player_hit(area):
-	health_component.health -= 1
+	health_component.health -= area.damage
 	hurtbox_component.start_invincibility(iframe_counter)
+	var playerHurtSound = PLAYER_HURT_SOUND.instantiate()
+	get_tree().current_scene.add_child(playerHurtSound)
 
 
 func on_player_died():
 	queue_free()
+
+
+func _on_hurtbox_component_invincibility_started():
+	blink_animation_player.play("start")
+
+
+func _on_hurtbox_component_invincibility_ended():
+	blink_animation_player.play("stop")

@@ -16,7 +16,9 @@ const PUSH_VELOCITY = 400.0
 
 var current_state = BatState.CHASE
 var knockback_speed = 200.0
+var iframe_counter = 0.4
 
+@onready var animation_player = $AnimationPlayer
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var hurtbox_component = $HurtboxComponent
 @onready var player_detection_zone = $PlayerDetectionZone
@@ -104,6 +106,7 @@ func update_animation():
 func _on_hurtbox_component_area_entered(area):
 	health_component.health -= area.damage
 	velocity = area.knockback_vector * knockback
+	hurtbox_component.start_invincibility(iframe_counter)
 
 
 func _on_health_component_died():
@@ -111,3 +114,11 @@ func _on_health_component_died():
 	get_parent().add_child(enemy_death_effect)
 	enemy_death_effect.global_position = global_position
 	queue_free()
+
+
+func _on_hurtbox_component_invincibility_started():
+	animation_player.play("start")
+
+
+func _on_hurtbox_component_invincibility_ended():
+	animation_player.play("stop")

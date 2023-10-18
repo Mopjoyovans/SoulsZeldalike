@@ -925,6 +925,8 @@ y_sort_enabled = true
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
+position = Vector2(-224, -192)
+scale = Vector2(1.9375, 2.15556)
 texture = ExtResource("1_i8xa3")
 offset = Vector2(320, 180)
 region_enabled = true
@@ -1013,11 +1015,20 @@ position = Vector2(200, 104)
 [node name="Player" parent="." instance=ExtResource("1_61r7b")]
 position = Vector2(312, 104)
 
-[node name="HealthUI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_3jft2")]
-player = NodePath("../Player")
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(312, 104)
+position_smoothing_enabled = true
 
 [node name="Tree" parent="." instance=ExtResource("9_h0q5k")]
 position = Vector2(104, 168)
 
 [node name="Tree2" parent="." instance=ExtResource("9_h0q5k")]
 position = Vector2(360, 56)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthUI" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("8_3jft2")]
+player = NodePath("../../Player")

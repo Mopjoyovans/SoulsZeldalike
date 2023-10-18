@@ -7,8 +7,10 @@
 [node name="HealthUI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 80.0
-offset_bottom = 13.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 84.0
+offset_bottom = 17.0
 script = ExtResource("1_c7by4")
 
 [node name="HeartUIEmpty" type="TextureRect" parent="."]

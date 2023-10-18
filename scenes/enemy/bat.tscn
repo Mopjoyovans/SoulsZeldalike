@@ -1,12 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://fo0arsrg6ab8"]
+[gd_scene load_steps=21 format=3 uid="uid://fo0arsrg6ab8"]
 
 [ext_resource type="Texture2D" uid="uid://dvills3uvl1w" path="res://assets/Enemies/Bat.png" id="1_eytvs"]
 [ext_resource type="PackedScene" uid="uid://c0vcsy3y6fqpi" path="res://scenes/component/hurtbox_component.tscn" id="1_x62cj"]
 [ext_resource type="Script" path="res://scenes/enemy/bat.gd" id="1_xoyst"]
 [ext_resource type="PackedScene" uid="uid://cqvsoqpwt1mb8" path="res://scenes/component/hitbox_component.tscn" id="2_8ovws"]
 [ext_resource type="Texture2D" uid="uid://cn81ek7e6dgbi" path="res://assets/Shadows/SmallShadow.png" id="2_hyhre"]
+[ext_resource type="PackedScene" uid="uid://bmloytw1pdtgb" path="res://scenes/controller/wander_controller.tscn" id="2_ip62y"]
 [ext_resource type="PackedScene" uid="uid://wx2xqsxuni4b" path="res://scenes/enemy/player_detection_zone.tscn" id="3_38ig8"]
 [ext_resource type="PackedScene" uid="uid://bupqwyj6uepi0" path="res://scenes/component/health_component.tscn" id="3_ka7ol"]
+[ext_resource type="PackedScene" uid="uid://vveuoson8axn" path="res://scenes/component/soft_collision_component.tscn" id="6_wf4a7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_30jg5"]
 atlas = ExtResource("1_eytvs")
@@ -61,12 +63,17 @@ height = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_4j1hc"]
 radius = 64.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_i3qil"]
+radius = 7.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_ojsrw"]
 radius = 4.0
 
 [node name="Bat" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_xoyst")
+
+[node name="WanderController" parent="." instance=ExtResource("2_ip62y")]
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rhb31")
@@ -93,9 +100,15 @@ position = Vector2(0, -16)
 shape = SubResource("CapsuleShape2D_thj3t")
 
 [node name="PlayerDetectionZone" parent="." instance=ExtResource("3_38ig8")]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
 shape = SubResource("CircleShape2D_4j1hc")
+
+[node name="SoftCollisionComponent" parent="." instance=ExtResource("6_wf4a7")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SoftCollisionComponent"]
+shape = SubResource("CircleShape2D_i3qil")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_ka7ol")]
 max_health = 2

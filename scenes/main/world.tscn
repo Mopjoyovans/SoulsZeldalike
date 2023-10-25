@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bkd8ed13pb3pf"]
+[gd_scene load_steps=15 format=3 uid="uid://bkd8ed13pb3pf"]
 
 [ext_resource type="PackedScene" uid="uid://cgo40cfx4q6b8" path="res://scenes/player/player.tscn" id="1_61r7b"]
 [ext_resource type="Texture2D" uid="uid://dhimiy8bjxbnx" path="res://assets/World/GrassBackground.png" id="1_i8xa3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bhgv86unx52ep" path="res://scenes/object/grass.tscn" id="6_28p1t"]
 [ext_resource type="PackedScene" uid="uid://fo0arsrg6ab8" path="res://scenes/enemy/bat.tscn" id="7_ey0kf"]
 [ext_resource type="PackedScene" uid="uid://wj16yqrwgx57" path="res://scenes/ui/health_ui.tscn" id="8_3jft2"]
+[ext_resource type="PackedScene" uid="uid://re628tdjxsf0" path="res://scenes/controller/camera.tscn" id="8_knfw7"]
 [ext_resource type="PackedScene" uid="uid://b3png5vf6hnwb" path="res://scenes/object/tree.tscn" id="9_h0q5k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vqaj7"]
@@ -1018,9 +1019,14 @@ position = Vector2(312, 104)
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" parent="." instance=ExtResource("8_knfw7")]
 position = Vector2(312, 104)
-position_smoothing_enabled = true
+
+[node name="TopLeft" parent="Camera2D/Limits" index="0"]
+position = Vector2(-224, -192)
+
+[node name="BottomRight" parent="Camera2D/Limits" index="1"]
+position = Vector2(1016, 584)
 
 [node name="Tree" parent="." instance=ExtResource("9_h0q5k")]
 position = Vector2(104, 168)
@@ -1032,3 +1038,5 @@ position = Vector2(360, 56)
 
 [node name="HealthUI" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("8_3jft2")]
 player = NodePath("../../Player")
+
+[editable path="Camera2D"]

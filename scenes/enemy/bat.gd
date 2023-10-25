@@ -65,8 +65,8 @@ func chase_player(delta: float):
 		move_toward_target(player.global_position, delta)
 		update_animation()
 		
-	else:
-		current_state = BatState.IDLE
+#	else:
+#		current_state = BatState.IDLE
 
 
 func seek_player(delta: float):
